@@ -7,11 +7,12 @@ require "logica/Domiciliario.php";
 require "logica/Pedido.php";
 require "logica/Producto.php";
 require "logica/Solicitud.php";
-require "persistencia/Conexion.php";
 require "logica/cambioClave.php";
 require "logica/Proveedor.php";
 require "logica/Proceso.php";
 require "logica/SolicitudP.php";
+require "persistencia/Conexion.php";
+
 
 $pagSinSesion = array(
     "presentacion/registrarCliente.php",

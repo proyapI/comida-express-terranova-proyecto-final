@@ -28,7 +28,7 @@ if($totalRegistros%$cantidad != 0){
 ?>
 <div class="container">
 	<div class="row mt-3">
-		<div class="col">
+		<div class="col-9">
 			<div class="card">
 				<div class="card-header">
 					<h3>Consultar Log</h3>

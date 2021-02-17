@@ -97,19 +97,70 @@ class Pedido{
         return $pedidos;
     }
     
-    function consultar($idpedido,$idC, $prod,$domiciliario){
+    function consultar($idpedido){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultar($idpedido,$idC, $prod,$domiciliario));
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultar($idpedido));
+        $this -> conexion -> cerrar();
+        $pedidos = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($pedidos, new Pedido($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5], $resultado[6], $resultado[7],$resultado[8],$resultado[9]));
+        }
+        return $pedidos;
+    }
+    
+    function consultarD($idC){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultarD($idC));
+        $this -> conexion -> cerrar();        
+        $resultado = $this -> conexion -> extraer();            
+        return $resultado[0];
+    }
+    
+    function consultarC($idD){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultarC($idD));
+        $this -> conexion -> cerrar();
+        $clientes = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($clientes, new Pedido($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5], $resultado[6], $resultado[7],$resultado[8],$resultado[9]));
+        }
+        return $clientes;
+    }
+    
+    function fecha($idpedido){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> fecha($idpedido));
         $this -> conexion -> cerrar();
         $resultado = $this -> conexion -> extraer();
-        $this -> id_pedido = $resultado[0];
-        $this -> unidades = $resultado[1];
-        $this -> fecha_hora = $resultado[2];
-        $this -> valor_unidad = $resultado[3];
-        $this -> valor_total = $resultado[4];
-        $this -> observaciones = $resultado[5];
-        $this -> estado = $resultado[6];        
-    }    
+        return $resultado[0];
+    }
+    
+    function consultarP($idC){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultarP($idC));
+        $this -> conexion -> cerrar();
+        $resultado = $this -> conexion -> extraer();
+        return $resultado[0];
+    }
+    
+    function consultarI($idC){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultarI($idC));
+        $this -> conexion -> cerrar();
+        $pedidos = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($pedidos, new Pedido($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5], $resultado[6], $resultado[7],$resultado[8],$resultado[9]));
+        }
+        return $pedidos;
+    }
+    
+    function valor($idpedido){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> valor($idpedido));
+        $this -> conexion -> cerrar();
+        $resultado = $this -> conexion -> extraer();
+        return $resultado[0];
+    }
     
     function consultarPorPagina($cantidad, $pagina, $orden, $dir){
         $this -> conexion -> abrir();

@@ -19,11 +19,22 @@ if(isset($_GET["dir"])){
 }
 
 $proceso = new Proceso();
-$procesos = $proceso -> consultarPorPagina($cantidad, $pagina, $orden, $dir, $_SESSION["rol"],$_SESSION["id"]);
-$totalRegistros = $proceso -> consultarTotalRegistros($_SESSION["rol"],$_SESSION["id"]);
+$pedido = new Pedido();
+if ($_SESSION["rol"]=="cliente"){            
+    $id = $pedido ->consultarD($_SESSION["id"]);
+    $accion = true;
+}elseif ($_SESSION["rol"]=="domiciliario"){    
+    $clientes = $pedido ->consultarC($_SESSION["id"]);
+    foreach ($clientes as $c){
+        $id = $c -> getId_cliente();        
+    }    
+}
+
+$procesos = $proceso -> consultarPorPagina($cantidad, $pagina, $orden, $dir, $_SESSION["rol"],$_SESSION["id"],$id,$accion);
+$totalRegistros = $proceso -> consultarTotalRegistros($_SESSION["rol"],$_SESSION["id"],$id);
 $totalPaginas = intval(($totalRegistros/$cantidad));
 if($totalRegistros%$cantidad != 0){
-    $totalPaginas++;    
+    $totalPaginas++;
 }
 ?>
 <div class="container">
@@ -31,19 +42,22 @@ if($totalRegistros%$cantidad != 0){
 		<div class="col">
 			<div class="card">
 				<div class="card-header">
-					<h3>Consultar proceso</h3>
+					<h3>Consultar proceso 
+						<?php echo "<a href='reporteProcesoPDF.php'> <i class='fas fa-download' data-toggle='tooltip' data-placement='bottom' title='Consultar catalogo'></i></a>"?>
+					</h3>
 				</div>
 				<div class="card-body">
 					<table class="table table-striped table-hover table-responsive">
 						<thead>
 							<tr>
 								<th width="8%">#</th>								
-								<th width="20%">Datos</th>
+								<th width="35%">Datos</th>
 								<th width="11%">Fecha</th> 	
 								<th width="10%">Hora</th>
 								<th width="8%">#Producto</th>
 								<th width="10%">Actor</th>
-								<th width="8%">#Actor</th>							
+								<th width="8%">#Actor</th>
+								<th> Servicios </th>							
 							</tr>
 						</thead>
 						<tbody>
@@ -54,6 +68,9 @@ if($totalRegistros%$cantidad != 0){
                             echo "<td>" . $procesoActual -> getId() . "</td><td>" . $procesoActual -> getDatos() . "</td><td>" . $procesoActual -> getFecha() . "</td>";
     						echo "<td>" . $procesoActual -> getHora() . "</td><td>" . $procesoActual -> getIdProducto() . "</td><td>" . $procesoActual -> getActor() . "</td>";
     						echo "<td>" . $procesoActual -> getIdActor() . "</td>";
+    						echo "<td>";
+    						echo "<a href='index.php?pid=" . base64_encode("presentacion/proceso/verProceso.php") . "&id=" . $procesoActual -> getId() . "&prod=" . $procesoActual -> getIdProducto() . "&actor=" . $procesoActual -> getActor() . "&idA=" . $procesoActual -> getIdActor() . "'><i class='fas fa-info-circle' data-toggle='tooltip' data-placement='bottom' title='Ver informacion del proceso'></i></a>&nbsp";
+    						echo "</td>";
     						echo "</tr>";						            						     						   
                         }
 						?>											

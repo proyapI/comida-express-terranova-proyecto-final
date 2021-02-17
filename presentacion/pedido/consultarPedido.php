@@ -35,7 +35,7 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario" || $_SESS
     					<h3>Consultar Pedido</h3>
     				</div>
     				<div class="card-body">    					
-    						<table class="table table-striped table-hover table-responsive">
+    						<table class="table table-striped table-hover">
     							<thead>
         							<tr>
         								<th width="5%">#Pedido</th>
@@ -71,8 +71,8 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario" || $_SESS
                     						        echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/eliminarPedido.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "&unidades=" . $p -> getUnidades() . "'><i class='fas fa-trash' data-toggle='tooltip' data-placement='bottom' title='Eliminar Pedido' onclick='return ConfirmDelete()'></i></a>&nbsp";
                     						    }
                     						    echo "<a href='indexModal.php?pid=" . base64_encode("presentacion/domiciliario/modalDomiciliario.php") . "&idDomiciliario=" . $p -> getId_domiciliario() . "' data-toggle='modal' data-target='#modalDomiciliario'><i class='fas fa-eye' data-toggle='tooltip' data-placement='bottom' title='Ver detalles domiciliario'></i></a>&nbsp";                                                            						                    						                				
-                    						    echo "<a href='indexModal.php?pid=" . base64_encode("presentacion/pedido/modalPedido.php") . "&idPedido=" . $p -> getId_pedido() . "&idCliente=" . $p -> getId_cliente() . "&idProducto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "' data-toggle='modal' data-target='#modalPedido'><i class='fas fa-info-circle' data-toggle='tooltip' data-placement='bottom' title='Ver informacion del pedido'></i></a>";
-                    						    echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/reportePedidoPDF.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "'><i class='fas fa-file-download' data-toggle='tooltip' data-placement='bottom' title='Generar factura'></i></a>&nbsp";
+                    						    echo "<a href='indexModal.php?pid=" . base64_encode("presentacion/pedido/modalPedido.php") . "&idPedido=" . $p -> getId_pedido() . "&idCliente=" . $p -> getId_cliente() . "&idProducto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "' data-toggle='modal' data-target='#modalPedido'><i class='fas fa-info-circle' data-toggle='tooltip' data-placement='bottom' title='Ver informacion del pedido'></i></a>&nbsp";
+                    						    echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/verPedido.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "'><i class='fas fa-info' data-toggle='tooltip' data-placement='bottom' title='Generar factura'></i></a>&nbsp";
                     						    echo "</td>";        						            						    
                     						    echo "</tr>"; 
                     						    $registro = 1;
@@ -86,8 +86,8 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario" || $_SESS
                                                 echo "<tr>";
                                                 echo "<td>" . $p -> getId_pedido() . "</td><td>" . $p -> getId_cliente() . "</td><td>" . $p -> getId_prod() . "</td><td>" . $p -> getId_domiciliario() . "</td>";
                                                 echo "<td>" . $p -> getUnidades() . "</td><td>" . $p -> getFecha_hora() . "</td><td>" . $p -> getValor_total() . "</td><td>" . $p -> getObservaciones() . "</td><td>" . $p -> getEstado() . "</td>";
-                                                echo "<td>";
-                                                if ($p -> getEstado() != "Confirmado"){
+                                                echo "<td>";                                            
+                                                if ($p -> getEstado()!="Confirmado"){
                                                     echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/confirmarPedido.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_cliente=" . $p -> getId_cliente() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() ."&accion="."proceso"."'><i class='fas fa-paper-plane' data-toggle='tooltip' data-placement='bottom' title='Procesar Pedido' onclick='return ProcessPedido()'></i></a>&nbsp";
                                                     echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/confirmarPedido.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_cliente=" . $p -> getId_cliente() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "&accion="."confirmar"."'><i class='fas fa-clipboard-check' data-toggle='tooltip' data-placement='bottom' title='Confirmar Pedido' onclick='return ConfirmPedido()'></i></a>&nbsp";
                                                 }
@@ -255,4 +255,4 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario" || $_SESS
 } else {
     echo "Lo siento. Usted no tiene permisos";
 }
-?>    
+?>

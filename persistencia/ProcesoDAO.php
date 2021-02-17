@@ -28,11 +28,21 @@ class ProcesoDAO{
                 from proceso where id = '" . $this -> id . "'";
     }      
     
-    function consultarTodos () {
-        return "select id, datos, fecha, hora, idProducto, actor, idActor";
+    function consultarDatos($id){
+        return "select id, datos, fecha, hora, idProducto, actor, idActor 
+                from proceso where actor= '" . "domiciliario" . "' and idActor = '" . $id . "'";
     }
     
-    function consultarPorPagina ($cantidad, $pagina, $orden, $dir,$rol,$id) {
+    function consultarActor(){
+        return "select actor
+                from proceso where actor= '" . "domiciliario " . "'" ;
+    }    
+    
+    function consultarTodos () {
+        return "select id, datos, fecha, hora, idProducto, actor, idActor from proceso";
+    }
+    
+    function consultarPorPagina ($cantidad, $pagina, $orden, $dir,$rol,$id,$cid,$accion) {
         if ($rol=="administrador"){
             if($orden == "" || $dir == ""){
                     return "select id, datos, fecha, hora, idProducto, actor, idActor
@@ -46,20 +56,27 @@ class ProcesoDAO{
                 }             
         }elseif ($rol=="cliente"){            
             if($orden == "" || $dir == ""){
-                return "select id, datos, fecha, hora, idProducto, actor, idActor
-                        from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'
-                        or actor= '" . "domiciliario" . "' limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
+                if ($accion== "verdadero"){
+                    return "select id, datos, fecha, hora, idProducto, actor, idActor
+                            from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'
+                            or idActor = '" . $cid . "' and actor= '" . "domiciliario" . "'
+                            limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
+                }else{
+                    return "select id, datos, fecha, hora, idProducto, actor, idActor
+                            from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'                            
+                            limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
+                }
             }else{
                 return "select id, datos, fecha, hora, idProducto, actor, idActor
                         from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'
-                        or actor= '" . "domiciliario" . "' order by " . $orden . " " . $dir . "
+                        and actor= '" . "domiciliario" . "' order by " . $orden . " " . $dir . "
                         limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
             }     
         }elseif ($rol=="domiciliario"){
             if($orden == "" || $dir == ""){
                 return "select id, datos, fecha, hora, idProducto, actor, idActor
                             from proceso where idActor = '" . $id . "' and actor= '" . "domiciliario" . "'
-                            or actor= '" . "cliente" . "' limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
+                            or idActor = '" . $cid . "' and actor= '" . "cliente" . "' limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
             }else{
                 return "select id, datos, fecha, hora, idProducto, actor, idActor
                             from proceso where idActor = '" . $id . "' and actor= '" . "domiciliario" . "'
@@ -69,15 +86,15 @@ class ProcesoDAO{
         }
     }
     
-    function consultarTotalRegistros($rol,$id){
+    function consultarTotalRegistros($rol,$id,$cid){
         if ($rol == "administrador"){
             return "select count(id) from proceso";
         }elseif ($rol == "cliente"){
             return "select count(id) from proceso WHERE idActor = '" . $id . "' and actor= '" . "cliente" . "' 
-            or actor= '" . "domiciliario" . "'";
+            or idActor = '" . $cid . "' and actor= '" . "domiciliario" . "'";
         }elseif ($rol == "domiciliario"){
             return "select count(id) from proceso WHERE idActor = '" . $id . "' and actor= '" . "domiciliario" . "'
-            or actor= '" . "cliente" . "'";
+            or idActor = '" . $cid . "' and actor= '" . "cliente" . "'";
         }
     }      
 }

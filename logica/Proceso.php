@@ -78,20 +78,39 @@ class Proceso{
         $this -> idActor = $resultado[5];
     }      
 
+    function consultarDatos($id){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarDatos($id));
+        $this -> conexion -> cerrar();
+        $proceso = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($proceso, new Proceso($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5],$resultado[6]));
+        }
+        return $proceso;
+    }     
+    
+    function consultarActor(){        
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarActor());
+        $this -> conexion -> cerrar();     
+        $resultado = $this -> conexion -> extraer();
+        return $resultado[0];
+    }
+    
     function consultarTodos(){
         $this -> conexion -> abrir();
         $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarTodos());
         $this -> conexion -> cerrar();
-        $Proceso = array();
+        $proceso = array();
         while(($resultado = $this -> conexion -> extraer()) != null){
-            array_push($Proceso, new Proceso($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5],$resultado[6]));
+            array_push($proceso, new Proceso($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5],$resultado[6]));
         }
-        return $Proceso;
+        return $proceso;
     }
     
-    function consultarPorPagina($cantidad, $pagina, $orden, $dir, $rol,$id){        
+    function consultarPorPagina($cantidad, $pagina, $orden, $dir, $rol,$id,$cid,$accion){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id));
+        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id,$cid,$accion));
         $this -> conexion -> cerrar();
         $Procesos = array();
         while(($resultado = $this -> conexion -> extraer()) != null){
@@ -100,9 +119,9 @@ class Proceso{
         return $Procesos;
     }
     
-    function consultarTotalRegistros($rol,$id){
+    function consultarTotalRegistros($rol,$id,$cid){
         $this -> conexion -> abrir();                          
-        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarTotalRegistros($rol,$id));
+        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarTotalRegistros($rol,$id,$cid));
         $this -> conexion -> cerrar();
         $resultado = $this -> conexion -> extraer();        
         return $resultado[0];

@@ -58,8 +58,8 @@ $unidades = $carrito -> consultarUnidades($_SESSION["id"])
           Cliente: <?php echo $cliente -> getNombre() . " " . $cliente -> getApellido(); ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">        
-          <a class="dropdown-item" href="index.php?pid= <?php echo base64_encode("presentacion/cliente/editarCliente.php")."&idCliente=".$_SESSION["id"]?>">Editar Perfil</a>
-          <a class="dropdown-item" href="index.php?pid= <?php echo base64_encode("presentacion/cliente/editarFotoCliente.php")."&idCliente=".$_SESSION["id"]?>">Editar Foto</a>
+          <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/cliente/editarCliente.php")."&idCliente=".$_SESSION["id"]?>">Editar Perfil</a>
+          <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/cliente/editarFotoCliente.php")."&idCliente=".$_SESSION["id"]?>">Editar Foto</a>
           <a class="dropdown-item" href="index.php?sesion=0">Cerrar Sesión</a>
         </div>
       </li>

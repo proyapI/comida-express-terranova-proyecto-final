@@ -36,11 +36,46 @@ class PedidoDAO{
                 from pedido";
     }
     
-    function consultar($idpedido,$idC, $prod,$domiciliario) {
-        return "select id_pedido, unidades, fecha_hora, valor_unidad, valor_total, observaciones, estado
+    function consultar($idpedido) {
+        return "select id_pedido,id_cliente, id_prod, id_domiciliario, unidades, fecha_hora, valor_unidad, valor_total, observaciones, estado
                 from pedido
-                where id_pedido = '" . $idpedido . "' and id_cliente = '" . $idC . "' and id_prod = '"
-                    . $prod . "' and id_domiciliario = '" . $domiciliario . "'";
+                where id_pedido = '" . $idpedido . "'";
+    }
+    
+    function consultarD($idC) {
+        return "select id_domiciliario
+                from pedido
+                where id_cliente = '" . $idC . "'";
+    }
+    
+    function consultarC($idD) {
+        return "select id_pedido,id_cliente, id_prod, id_domiciliario, unidades, fecha_hora, valor_unidad, valor_total, observaciones, estado
+                from pedido
+                where id_domiciliario = '" . $idD . "'";
+    }
+    
+    function fecha($idpedido) {
+        return "select fecha_hora
+                from pedido
+                where id_pedido = '" . $idpedido . "'";
+    }
+    
+    function consultarP($idC) {
+        return "select id_prod
+                from pedido
+                where id_cliente = '" . $idC . "'";
+    }
+    
+    function consultarI($idC) {
+        return "select id_pedido, id_cliente, id_prod, id_domiciliario, unidades, fecha_hora, valor_unidad, valor_total, observaciones, estado
+                from pedido
+                where id_cliente = '" . $idC . "'";
+    }
+    
+    function valor($idpedido) {
+        return "select valor_total
+                from pedido
+                where id_pedido = '" . $idpedido . "'";
     }
     
     function consultarPorPagina ($cantidad, $pagina, $orden, $dir) {
