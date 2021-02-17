@@ -22,7 +22,6 @@ $proceso = new Proceso();
 $pedido = new Pedido();
 if ($_SESSION["rol"]=="cliente"){            
     $id = $pedido ->consultarD($_SESSION["id"]);
-    $accion = true;
 }elseif ($_SESSION["rol"]=="domiciliario"){    
     $clientes = $pedido ->consultarC($_SESSION["id"]);
     foreach ($clientes as $c){
@@ -30,7 +29,7 @@ if ($_SESSION["rol"]=="cliente"){
     }    
 }
 
-$procesos = $proceso -> consultarPorPagina($cantidad, $pagina, $orden, $dir, $_SESSION["rol"],$_SESSION["id"],$id,$accion);
+$procesos = $proceso -> consultarPorPagina($cantidad, $pagina, $orden, $dir, $_SESSION["rol"],$_SESSION["id"],$id);
 $totalRegistros = $proceso -> consultarTotalRegistros($_SESSION["rol"],$_SESSION["id"],$id);
 $totalPaginas = intval(($totalRegistros/$cantidad));
 if($totalRegistros%$cantidad != 0){

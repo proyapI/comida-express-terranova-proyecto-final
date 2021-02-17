@@ -108,9 +108,9 @@ class Proceso{
         return $proceso;
     }
     
-    function consultarPorPagina($cantidad, $pagina, $orden, $dir, $rol,$id,$cid,$accion){
+    function consultarPorPagina($cantidad, $pagina, $orden, $dir, $rol,$id,$cid){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id,$cid,$accion));
+        $this -> conexion -> ejecutar($this -> ProcesoDAO -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id,$cid));
         $this -> conexion -> cerrar();
         $Procesos = array();
         while(($resultado = $this -> conexion -> extraer()) != null){

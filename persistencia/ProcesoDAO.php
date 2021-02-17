@@ -42,7 +42,7 @@ class ProcesoDAO{
         return "select id, datos, fecha, hora, idProducto, actor, idActor from proceso";
     }
     
-    function consultarPorPagina ($cantidad, $pagina, $orden, $dir,$rol,$id,$cid,$accion) {
+    function consultarPorPagina ($cantidad, $pagina, $orden, $dir,$rol,$id,$cid) {
         if ($rol=="administrador"){
             if($orden == "" || $dir == ""){
                     return "select id, datos, fecha, hora, idProducto, actor, idActor
@@ -55,17 +55,11 @@ class ProcesoDAO{
                             limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
                 }             
         }elseif ($rol=="cliente"){            
-            if($orden == "" || $dir == ""){
-                if ($accion== "verdadero"){
-                    return "select id, datos, fecha, hora, idProducto, actor, idActor
-                            from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'
-                            or idActor = '" . $cid . "' and actor= '" . "domiciliario" . "'
-                            limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
-                }else{
-                    return "select id, datos, fecha, hora, idProducto, actor, idActor
-                            from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'                            
-                            limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
-                }
+            if($orden == "" || $dir == ""){                
+                return "select id, datos, fecha, hora, idProducto, actor, idActor
+                        from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'
+                        or idActor = '" . $cid . "' and actor= '" . "domiciliario" . "'
+                        limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;                
             }else{
                 return "select id, datos, fecha, hora, idProducto, actor, idActor
                         from proceso where idActor = '" . $id . "' and actor= '" . "cliente" . "'
