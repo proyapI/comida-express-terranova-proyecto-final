@@ -70,6 +70,13 @@ class DomiciliarioDAO{
                 from Domiciliario";
     }
     
+    function consultarTodosD () {
+        return "select distinct domiciliario.idDomiciliario, domiciliario.nombre, domiciliario.apellido, domiciliario.ciudad, 
+                domiciliario.localidad, domiciliario.direccion, domiciliario.telefono, domiciliario.imagen, domiciliario.correo, 
+                domiciliario.estado, proceso.idActor
+                from domiciliario,proceso where domiciliario.idDomiciliario=proceso.idActor";        
+    }
+    
     function editar(){
         return "update Domiciliario
                 set nombre = '".$this -> nombre . "', apellido ='" . $this -> apellido . "', ciudad ='" .

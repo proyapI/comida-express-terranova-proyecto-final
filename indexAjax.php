@@ -13,6 +13,8 @@ require "logica/Pedido.php";
 require "logica/Producto.php";
 require "logica/Proveedor.php";
 require "logica/Log.php";
+require "logica/Ingrediente.php";
+require "logica/Producto_ingrediente.php";
 require "persistencia/Conexion.php";
 
 $pid = base64_decode($_GET["pid"]);

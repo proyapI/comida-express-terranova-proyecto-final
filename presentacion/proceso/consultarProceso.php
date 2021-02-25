@@ -20,8 +20,9 @@ if(isset($_GET["dir"])){
 
 $proceso = new Proceso();
 $pedido = new Pedido();
+$id="";
 if ($_SESSION["rol"]=="cliente"){            
-    $id = $pedido ->consultarD($_SESSION["id"]);
+        $id = $pedido ->consultarD($_SESSION["id"]);
 }elseif ($_SESSION["rol"]=="domiciliario"){    
     $clientes = $pedido ->consultarC($_SESSION["id"]);
     foreach ($clientes as $c){
@@ -42,7 +43,11 @@ if($totalRegistros%$cantidad != 0){
 			<div class="card">
 				<div class="card-header">
 					<h3>Consultar proceso 
-						<?php echo "<a href='reporteProcesoPDF.php'> <i class='fas fa-download' data-toggle='tooltip' data-placement='bottom' title='Consultar catalogo'></i></a>"?>
+						<?php 	
+						if ($totalRegistros!=0){
+						    echo "<a href='reporteProcesoPDF.php'> <i class='fas fa-download' data-toggle='tooltip' data-placement='bottom' title='Consultar trazabilidad'></i></a>";
+						}
+                        ?>
 					</h3>
 				</div>
 				<div class="card-body">

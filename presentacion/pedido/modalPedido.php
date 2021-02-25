@@ -8,7 +8,7 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario"){
     $prod = $_GET["idProducto"];
     $domiciliario = $_GET["id_domiciliario"];
     $pedido = new Pedido();
-    $pedido -> consultar($_GET["idPedido"],$_GET["idCliente"],$prod,$domiciliario);
+    $pedidos = $pedido -> consultarF($_GET["idPedido"],$_GET["idCliente"],$prod,$domiciliario);
     ?>
     <div class="modal-header">
     	<h5 class="modal-title" id="exampleModalLabel"><b><?php echo "Pedido #" . $pedido -> getId_pedido() ?></b></h5>
@@ -20,7 +20,7 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario"){
     <div class="modal-body">     	
     	<img src="<?php echo $producto -> getImagen() ?>" width="20%"> <br><b> <?php echo "Nombre del producto: " ?> </b> 
     	<?php  echo $producto -> getNombre() ?><br><b> <?php echo "Descripcion del producto: " ?> </b> <?php  echo $producto -> getDescripcion() ?> 
-    	<br><b> <?php echo "Valor por unidad: " ?> </b> <?php  echo $pedido -> getValor_unidad() ?>
+    	<br><b> <?php echo "Valor por unidad: " ?> </b> <?php  foreach ($pedidos as $p){ echo  $p -> getValor_unidad();} ?>
     </div>    
     
     <?php    

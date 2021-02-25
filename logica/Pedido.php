@@ -108,6 +108,17 @@ class Pedido{
         return $pedidos;
     }
     
+    function consultarF($idpedido,$id,$prod,$domi){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> consultarF($idpedido,$id,$prod,$domi));
+        $this -> conexion -> cerrar();
+        $pedidos = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($pedidos, new Pedido($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4], $resultado[5], $resultado[6], $resultado[7],$resultado[8],$resultado[9]));
+        }
+        return $pedidos;
+    }
+    
     function consultarD($idC){
         $this -> conexion -> abrir();
         $this -> conexion -> ejecutar($this -> pedidoDAO -> consultarD($idC));

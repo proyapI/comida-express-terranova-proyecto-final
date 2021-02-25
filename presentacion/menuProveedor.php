@@ -16,8 +16,8 @@ $proveedor -> consultar();
           Ingredientes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Crear</a>
-          <a class="dropdown-item" href="#">Consultar</a>
+          <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/ingrediente/crearIngrediente.php")?>">Crear</a>
+          <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/ingrediente/consultarIngrediente.php")?>">Consultar</a>
           <a class="dropdown-item" href="#">Consultar Solicitudes</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Buscar</a>

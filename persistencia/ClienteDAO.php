@@ -107,6 +107,12 @@ class ClienteDAO{
     function editarFoto() {
         return "update Cliente set imagen = '" . $this -> imagen . "'
                 where idCliente = '" . $this -> idCliente . "'";
-    }  
+    } 
+    
+    function consultarTodosP () {
+        return "select distinct cliente.idCliente, cliente.nombre, cliente.apellido, cliente.ciudad, cliente.localidad,cliente.direccion, 
+                cliente.telefono, cliente.imagen, cliente.correo, proceso.idActor
+                from cliente,proceso where cliente.idCliente=proceso.idActor";
+    }
 }
 ?>

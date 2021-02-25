@@ -78,5 +78,10 @@ class ProductoDAO {
     function eliminar(){
         return "delete from producto where id_prod = '".$this -> id_prod."'";
     }   
+
+    function consultarId(){
+        return "select id_prod, nombre, descripcion, imagen, cantidad_und, valor
+                from Producto where id_prod = '" . $this-> id_prod . "'";
+    }
 }
 ?>

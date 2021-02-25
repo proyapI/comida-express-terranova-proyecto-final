@@ -72,8 +72,7 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "cliente"){
         						    echo "<td>";
         						    if($_SESSION["rol"] == "administrador"){
         						        echo "<a href='index.php?pid= " . base64_encode("presentacion/producto/editarProducto.php") . "&id_prod=" . $productoActual -> getId_prod() . "'><i class='fas fa-edit'></i></a>&nbsp";
-        						        echo "<a href='index.php?pid=" . base64_encode("presentacion/producto/editarFotoProducto.php") . "&id_prod=" . $productoActual -> getId_prod() ."'><i class='fas fa-camera' data-toggle='tooltip' data-placement='bottom' title='Cambiar Foto'></i></a>&nbsp";
-        						        echo "<a href='index.php?pid=" . base64_encode("presentacion/producto/eliminarProducto.php") . "&id_prod=" . $productoActual -> getId_prod() ."'><i class='fas fa-trash' data-toggle='tooltip' data-placement='bottom' title='Eliminar Producto' onclick='return ConfirmDelete()'></i></a></td>";
+        						        echo "<a href='index.php?pid=" . base64_encode("presentacion/producto/editarFotoProducto.php") . "&id_prod=" . $productoActual -> getId_prod() ."'><i class='fas fa-camera' data-toggle='tooltip' data-placement='bottom' title='Cambiar Foto'></i></a>&nbsp";        						        
         						    }
         						    if($_SESSION["rol"] == "cliente"){                                	                                
                                     	echo "<a href='index.php?pid= " . base64_encode("presentacion/producto/comprarProducto.php" ) .    
@@ -176,17 +175,7 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "cliente"){
     	//alert (url);
     	location.replace(url);
     });
-    </script>
-    <script>
-        function ConfirmDelete(){
-            var respuesta = confirm("\277Esta de acuerdo con eliminar el producto?");
-            if (respuesta == true){
-                return true;
-            }else{
-                return false;
-            }
-        }
-    </script>
+    </script>    
     <script>
 		function (){
 			document.formulario.submit();

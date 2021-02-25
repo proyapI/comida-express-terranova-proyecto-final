@@ -136,5 +136,18 @@ class Producto{
         $this -> conexion -> ejecutar($this -> productoDAO -> eliminar());
         $this -> conexion -> cerrar();
     }
+
+    function consultarId(){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> productoDAO -> consultarId());
+        $this -> conexion -> cerrar();
+        $resultado = $this -> conexion -> extraer();
+        $this -> id_prod = $resultado[0];
+        $this -> nombre = $resultado[1];
+        $this -> descripcion = $resultado[2];
+        $this -> imagen = $resultado[3];
+        $this -> cantidad_und = $resultado[4];
+        $this -> valor = $resultado[5];
+    }
 }
 ?>

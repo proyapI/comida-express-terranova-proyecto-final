@@ -72,7 +72,10 @@ if($_SESSION["rol"] == "cliente" || $_SESSION["rol"] == "domiciliario" || $_SESS
                     						    }
                     						    echo "<a href='indexModal.php?pid=" . base64_encode("presentacion/domiciliario/modalDomiciliario.php") . "&idDomiciliario=" . $p -> getId_domiciliario() . "' data-toggle='modal' data-target='#modalDomiciliario'><i class='fas fa-eye' data-toggle='tooltip' data-placement='bottom' title='Ver detalles domiciliario'></i></a>&nbsp";                                                            						                    						                				
                     						    echo "<a href='indexModal.php?pid=" . base64_encode("presentacion/pedido/modalPedido.php") . "&idPedido=" . $p -> getId_pedido() . "&idCliente=" . $p -> getId_cliente() . "&idProducto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "' data-toggle='modal' data-target='#modalPedido'><i class='fas fa-info-circle' data-toggle='tooltip' data-placement='bottom' title='Ver informacion del pedido'></i></a>&nbsp";
-                    						    echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/verPedido.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "'><i class='fas fa-info' data-toggle='tooltip' data-placement='bottom' title='Generar factura'></i></a>&nbsp";
+                    						    echo "<a href='index.php?pid=" . base64_encode("presentacion/pedido/verPedido.php") . "&id_pedido=" . $p -> getId_pedido() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "'><i class='fas fa-info' data-toggle='tooltip' data-placement='bottom' title='Ver factura'></i></a>&nbsp";                    						    
+                    						    echo "<a href='reportePedidoPDF.php?id_pedido=" . $p -> getId_pedido() . "&id_producto=" . $p -> getId_prod() . "&id_domiciliario=" . $p -> getId_domiciliario() . "'><i class='fas fa-download' data-toggle='tooltip' data-placement='bottom' title='Generar factura'></i></a>&nbsp";
+                    						    
+                    						    
                     						    echo "</td>";        						            						    
                     						    echo "</tr>"; 
                     						    $registro = 1;

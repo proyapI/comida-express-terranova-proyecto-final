@@ -11,6 +11,9 @@ require "logica/cambioClave.php";
 require "logica/Proveedor.php";
 require "logica/Proceso.php";
 require "logica/SolicitudP.php";
+require "logica/SolicitudI.php";
+require "logica/Ingrediente.php";
+require "logica/Producto_ingrediente.php";
 require "persistencia/Conexion.php";
 
 

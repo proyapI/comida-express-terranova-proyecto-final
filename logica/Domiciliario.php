@@ -167,6 +167,18 @@ class Domiciliario{
         return $domiciliarios;
     }
     
+    function consultarTodosD(){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> domiciliarioDAO -> consultarTodos());
+        $this -> conexion -> cerrar();
+        $domiciliarios = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($domiciliarios, new Domiciliario($resultado[0], $resultado[1], $resultado[2], $resultado[3], $resultado[4],
+                $resultado[5], $resultado[6], $resultado[7],$resultado[8],"",$resultado[9]));
+        }
+        return $domiciliarios;
+    }
+    
     function editar(){
         $this -> conexion -> abrir();
         $this -> conexion -> ejecutar($this -> domiciliarioDAO -> editar());

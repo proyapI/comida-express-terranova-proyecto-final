@@ -41,6 +41,12 @@ class PedidoDAO{
                 from pedido
                 where id_pedido = '" . $idpedido . "'";
     }
+    function consultarF($idpedido,$id,$prod,$domi) {
+        return "select id_pedido,id_cliente, id_prod, id_domiciliario, unidades, fecha_hora, valor_unidad, valor_total, observaciones, estado
+                from pedido
+                where id_pedido = '" . $idpedido . "' and id_cliente='" . $id ."' and id_prod = '" . $prod . "' and
+                id_domiciliario='" . $domi . "'";
+    }
     
     function consultarD($idC) {
         return "select id_domiciliario

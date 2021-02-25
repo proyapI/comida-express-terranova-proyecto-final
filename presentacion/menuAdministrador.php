@@ -73,10 +73,19 @@ $administrador -> consultar();
           <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/proceso/consultarProceso.php") . "&click=" . "consultarLog" ?>">Consultar</a>
         </div>
       </li>
+
+      <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ingrediente
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/ingrediente/consultarIngrediente.php")?>">Consultar</a>                
+            </div>
+      </li>
       
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Log
+          Resumen
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/log/consultarLog.php") . "&click=" . "consultarLog" ?>">Consultar</a>
