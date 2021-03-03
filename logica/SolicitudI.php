@@ -75,10 +75,24 @@ class SolicitudI{
         $resultado = $this -> conexion -> extraer();
         return $resultado[0];
     }
+    
+    function consultarTotalRegistrosE($idP){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> SolicitudIDAO -> consultarTotalRegistrosE($idP));
+        $this -> conexion -> cerrar();
+        $resultado = $this -> conexion -> extraer();
+        return $resultado[0];
+    }
 
     function eliminar($id){
         $this -> conexion -> abrir();
         $this -> conexion -> ejecutar($this -> SolicitudIDAO -> eliminar($id));
+        $this -> conexion -> cerrar();
+    }
+    
+    function actualizar($id, $sum){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> SolicitudIDAO -> actualizar($id, $sum));
         $this -> conexion -> cerrar();
     }
 }

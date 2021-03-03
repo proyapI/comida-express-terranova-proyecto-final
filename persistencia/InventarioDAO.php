@@ -1,12 +1,12 @@
 <?php
 
-class IngredienteDAO{
+class InventarioDAO{
     private $id_ingrediente;
     private $nombre;
     private $cantidad_und;
     private $idProveedor;
     
-    function IngredienteDAO($pid_ingrediente, $pnombre, $pcantidad_und,$pIdProveedor){
+    function InventarioDAO($pid_ingrediente, $pnombre, $pcantidad_und,$pIdProveedor){
         $this -> id_ingrediente = $pid_ingrediente;
         $this -> nombre = $pnombre;
         $this -> cantidad_und = $pcantidad_und;
@@ -14,38 +14,38 @@ class IngredienteDAO{
     }
 
     function agregar(){
-        return "insert into ingrediente (id_ingrediente, nombre, cantidad_und,idProveedor)
+        return "insert into inventario (id_ingrediente, nombre, cantidad_und,idProveedor)
                 values ('".$this -> id_ingrediente."','".$this -> nombre."','".$this -> cantidad_und."','" . $this->idProveedor . "')";
     }
 
     function consultarTodos(){
-        return "select id_ingrediente, nombre, cantidad_und,idProveedor from ingrediente";
+        return "select id_ingrediente, nombre, cantidad_und,idProveedor from inventario";
     }
 
     function consultar(){
-        return "select nombre, cantidad_und, idProveedor from ingrediente where id_ingrediente = '".$this -> id_ingrediente."'";
+        return "select nombre, cantidad_und from inventario where id_ingrediente = '".$this -> id_ingrediente."'";
     }
 
     function consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id){
         if ($rol == "administrador"){
             if($orden == "" || $dir == ""){
                 return "select id_ingrediente, nombre, cantidad_und, idProveedor
-                    from ingrediente
+                    from inventario
                     limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
             }else{
                 return "select id_ingrediente, nombre, cantidad_und, idProveedor
-                    from ingredientess
+                    from inventarioss
                     order by " . $orden . " " . $dir . "
                     limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
             }
         }else{
             if($orden == "" || $dir == ""){
                 return "select id_ingrediente, nombre, cantidad_und,idProveedor
-                    from ingrediente where idProveedor = '" . $id . "'
+                    from inventario where idProveedor = '" . $id . "'
                     limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
             }else{
                 return "select id_ingrediente, nombre, cantidad_und,idProveedor
-                    from ingredientes
+                    from inventarios
                     order by " . $orden . " " . $dir . "
                     limit " . strval(($pagina - 1) * $cantidad) . ", " . $cantidad;
             }
@@ -55,36 +55,25 @@ class IngredienteDAO{
     function consultarTotalRegistros($rol,$id){
         if ($rol=="administrador"){
             return "select count(id_ingrediente)
-                    from ingrediente";
+                    from inventario";
         }else{
             return "select count(id_ingrediente)
-                    from ingrediente where idProveedor = '" . $id . "'";
+                    from inventario where idProveedor = '" . $id . "'";
         }
     }
 
     function buscar($filtro){
         return "select id_ingrediente, nombre, cantidad_und,idProveedor
-                from ingrediente
+                from inventario
                 where nombre like '" . $filtro . "%'";
     }
 
-    function eliminar(){
-        return "delete from ingrediente where id_ingrediente = '".$this -> id_ingrediente."'";
-    }
-
     function editarUnidades($idI,$cant){
-        return "update ingrediente set cantidad_und = '".$cant."' where id_ingrediente = '".$idI."'";
+        return "update inventario set cantidad_und = '".$cant."' where id_ingrediente = '".$idI."'";
     }
 
     function consultarE($idProd){
-        return "select i.id_ingrediente, i.nombre, pi.cantidad, i.idProveedor from ingrediente as i, lista_ingrediente as pi where i.id_ingrediente = pi.id_ingrediente and pi.id_prod = $idProd";
-    }
-    
-    function editar(){
-        return "update Ingrediente
-                set nombre = '".$this -> nombre . "', cantidad_und ='" . $this -> cantidad_und . "',
-                idProveedor = '".$this -> idProveedor . "'
-                where id_ingrediente = '" . $this -> id_ingrediente . "'";
+        return "select i.id_ingrediente, i.nombre, pi.cantidad from inventario as i, producto_inventario as pi where i.id_ingrediente = pi.id_ingrediente and pi.id_prod = $idProd";
     }
 }
 

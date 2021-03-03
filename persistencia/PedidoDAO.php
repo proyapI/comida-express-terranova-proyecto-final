@@ -120,5 +120,9 @@ class PedidoDAO{
         
     }
     
+    function productoVendido(){
+        return "SELECT pro.nombre, COUNT(*) as cantidad from pedido p, producto pro where p.estado = 'confirmado' and p.id_prod = pro.id_prod GROUP BY p.id_prod";
+    }
+    
 }
 ?>

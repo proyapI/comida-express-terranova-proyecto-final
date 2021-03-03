@@ -80,8 +80,19 @@ $administrador -> consultar();
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/ingrediente/consultarIngrediente.php")?>">Consultar</a>                
+                <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/ingrediente/consultarInventario.php")?>">Consultar inventario</a>                
             </div>
       </li>
+      
+      <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Balance
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/pedido/consultarProductoVendido.php")?>">Consultar producto mas vendido</a>
+                <a class="dropdown-item" href="index.php?pid=<?php echo base64_encode("presentacion/producto/consultarProductoPrecio.php")?>">Consultar productos por precio</a>
+            </div>
+        </li>
       
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

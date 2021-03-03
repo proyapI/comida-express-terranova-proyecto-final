@@ -20,9 +20,9 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
         $dir = $_GET["dir"];
     }
 
-    $ingrediente = new Ingrediente();
-    $ingredientes = $ingrediente -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$_SESSION["rol"],$_SESSION["id"]);
-    $totalRegistros = $ingrediente -> consultarTotalRegistros($_SESSION["rol"],$_SESSION["id"]);
+    $inventario = new Inventario();
+    $inventarios = $inventario -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$_SESSION["rol"],$_SESSION["id"]);
+    $totalRegistros = $inventario -> consultarTotalRegistros($_SESSION["rol"],$_SESSION["id"]);
     $totalPaginas = intval(($totalRegistros/$cantidad));
     if($totalRegistros%$cantidad != 0){
         $totalPaginas++;
@@ -34,7 +34,7 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Consultar Ingrediente</h3>
+                        <h3>Consultar Inventario</h3>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped table-hover">
@@ -44,13 +44,13 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
                                 <th width="50%">Nombre
                                     <?php
                                     if($orden != "nombre"){
-                                        echo "<a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=asc'><i class='fas fa-sort-amount-up'></i></a> 
-                                              <a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=desc'><i class='fas fa-sort-amount-down'></i></a>";
+                                        echo "<a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=asc'><i class='fas fa-sort-amount-up'></i></a> 
+                                              <a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=desc'><i class='fas fa-sort-amount-down'></i></a>";
                                     }else if($orden == "nombre" && $dir == "asc"){
                                         echo "<i class='fas fa-sort-up'></i>
-                                              <a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=desc'><i class='fas fa-sort-amount-down'></i></a>";
+                                              <a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=desc'><i class='fas fa-sort-amount-down'></i></a>";
                                     }else if($orden == "nombre" && $dir == "desc"){
-                                        echo "<a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=asc'><i class='fas fa-sort-amount-up'></i></a>
+                                        echo "<a href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&cantidad=" . $cantidad . "&orden=nombre&dir=asc'><i class='fas fa-sort-amount-up'></i></a>
                                               <i class='fas fa-sort-down'></i>";
                                     }
                                     ?>
@@ -59,28 +59,19 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
                                 <?php if ($_SESSION["rol"]=="administrador"){?>
                                 	<th width="30%">idProveedor</th>                                	
                                 <?php }?>
-                                <th width="30%">Servicios</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             $i = (($pagina - 1) * $cantidad) + 1;
-                            foreach ($ingredientes as $ingredienteActual){
-                                if ($ingredienteActual -> getCantidadUnd() != 0 && $_SESSION["rol"] == "administrador"){
+                            foreach ($inventarios as $inventarioActual){
+                                if ($inventarioActual -> getCantidadUnd() != 0 && $_SESSION["rol"] == "administrador"){
                                     echo "<tr>";
-                                    echo "<td>" . $ingredienteActual -> getIdIngrediente() . "</td><td>" . $ingredienteActual -> getNombre() . "</td><td>" . $ingredienteActual -> getCantidadUnd() . "</td><td>" . $ingredienteActual -> getIdProveedor() . "</td>";                                    
-                                    echo "<td>";
-                                    echo "<a href='index.php?pid= " . base64_encode("presentacion/ingrediente/solicitarIngrediente.php" ) .
-                                    "&idIngrediente=" . $ingredienteActual -> getIdIngrediente() . "&nombre=" . $ingredienteActual -> getNombre()  . "'><i class='fas fa-handshake' ></i></a></td>";
-                                    echo "</td>";
+                                    echo "<td>" . $inventarioActual -> getIdIngrediente() . "</td><td>" . $inventarioActual -> getNombre() . "</td><td>" . $inventarioActual -> getCantidadUnd() . "</td><td>" . $inventarioActual -> getIdProveedor() . "</td>";                                                                      
                                     echo "</tr>";
                                 }else{
                                     echo "<tr>";
-                                    echo "<td>" . $ingredienteActual -> getIdIngrediente() . "</td><td>" . $ingredienteActual -> getNombre() . "</td><td>" . $ingredienteActual -> getCantidadUnd() . "</td>";
-                                    echo "<td>";
-                                    echo "<a href='index.php?pid= " . base64_encode("presentacion/ingrediente/editarIngrediente.php" ) .
-                                    "&idIngrediente=" . $ingredienteActual -> getIdIngrediente() . "&nombre=" . $ingredienteActual -> getNombre()  . "&cantidad=".$ingredienteActual -> getCantidadUnd()."'><i class='fas fa-edit' data-toggle='tooltip' data-placement='bottom' title='Editar'></i></a></td>";
-                                    echo "</td>";
+                                    echo "<td>" . $inventarioActual -> getIdIngrediente() . "</td><td>" . $inventarioActual -> getNombre() . "</td><td>" . $inventarioActual -> getCantidadUnd() . "</td>";                                    
                                     echo "</tr>";
                                 }
                             }
@@ -96,11 +87,11 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
                                             echo "<li class='page-item disabled'><span class='page-link'>Anterior</span></li>";
                                             date_default_timezone_set('America/Bogota');
                                             if ($_SESSION["rol"] == "administrador"){
-                                                $log = new Log($_SESSION["id"],"consultar","consultar ingrediente" , date('Y-m-d'),date('H:i:s'),"administrador");
+                                                $log = new Log($_SESSION["id"],"consultar","consultar inventario" , date('Y-m-d'),date('H:i:s'),"administrador");
                                                 $log -> crear();
                                             }
                                         }else{
-                                            echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&pagina=" . ($pagina-1) . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>Anterior</a></li>";
+                                            echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&pagina=" . ($pagina-1) . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>Anterior</a></li>";
                                         }
                                         for($i=1; $i<=$totalPaginas; $i++){
                                             $radius = 2;
@@ -111,14 +102,14 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
                                                 else{
                                                     if ($pagina != 1 && $i == $pagina-2 || $pagina != 1 && $i== $pagina+2){
                                                         if ($i == 1 || $i == $totalPaginas){
-                                                            echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&pagina=" . $i . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>" . $i . "</a></li>";
+                                                            echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&pagina=" . $i . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>" . $i . "</a></li>";
                                                         }
                                                         else{
                                                             echo "...";
                                                         }
                                                     }
                                                     else{
-                                                        echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&pagina=" . $i . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>" . $i . "</a></li>";
+                                                        echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&pagina=" . $i . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>" . $i . "</a></li>";
                                                     }
                                                 }
                                             }
@@ -129,7 +120,7 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
                                         if($pagina == $totalPaginas || $totalRegistros==0){
                                             echo "<li class='page-item disabled'><span class='page-link'>Siguiente</span></li>";
                                         }else{
-                                            echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarIngrediente.php") . "&pagina=" . ($pagina+1) . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>Siguiente</a></li>";
+                                            echo "<li class='page-item'><a class='page-link' href='index.php?pid=" . base64_encode("presentacion/ingrediente/consultarInventario.php") . "&pagina=" . ($pagina+1) . "&cantidad=" . $cantidad . (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") . "'>Siguiente</a></li>";
                                         }
                                         ?>
                                     </ul>
@@ -150,7 +141,7 @@ if($_SESSION["rol"] == "administrador" || $_SESSION["rol"] == "proveedor"){
     </div>
     <script>
         $("#cantidad").on("change", function() {
-            url = "index.php?pid=<?php echo base64_encode("presentacion/ingrediente/consultarIngrediente.php") ?>&cantidad=" + $(this).val() + "<?php echo (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") ?>";
+            url = "index.php?pid=<?php echo base64_encode("presentacion/ingrediente/consultarInventario.php") ?>&cantidad=" + $(this).val() + "<?php echo (($orden!="")?"&orden=" . $orden:"") . (($dir!="")?"&dir=" . $dir:"") ?>";
             //alert (url);
             location.replace(url);
         });

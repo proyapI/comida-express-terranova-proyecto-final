@@ -3,8 +3,8 @@
 if($_GET["rol"] == "administrador"){
     $filtro = $_GET["filtro"];
     $ingrediente = new Ingrediente();
-    $producto = new Producto($_GET["id_prod"], "", "", "", "", "");
-    $producto -> consultarId();
+    $lista = new Lista_ingrediente();
+    $lista->consultar($_GET["id_prod"]);
     $ingredientes = $ingrediente -> buscar($filtro);
     ?>
     <div class="card">
@@ -28,7 +28,7 @@ if($_GET["rol"] == "administrador"){
                     echo "<tr>";
                     echo "<td>" . $ingredienteActual -> getIdIngrediente() . "</td><td>". str_replace($filtro, "<FONT color='#FF0000'>$filtro</FONT>", $ingredienteActual -> getNombre()) ."</td>";
                     echo "<td>" . $ingredienteActual -> getCantidadUnd() . "</td>";
-                    echo "<td><a href='index.php?pid= " . base64_encode("presentacion/ingrediente/agregarIngrediente.php") . "&idIngrediente=" . $ingredienteActual -> getIdIngrediente() . "&id_prod=".$producto -> getId_prod()."&cantidad_und=".$producto -> getCantidad_und()."'><i class='fas fa-plus-square' data-placement='bottom' title='Agregar Ingrediente' ></i></a></td>";
+                    echo "<td><a href='index.php?pid= " . base64_encode("presentacion/ingrediente/agregarIngrediente.php") . "&idIngrediente=" . $ingredienteActual -> getIdIngrediente() . "&id_prod=".$lista->getIdProd()."&cantidad_und=".$lista -> getCantidad_und()."'><i class='fas fa-plus-square' data-placement='bottom' title='Agregar Ingrediente' ></i></a></td>";
                     echo "</tr>";
                 }
                 ?>

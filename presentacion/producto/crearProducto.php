@@ -4,12 +4,11 @@ require "logica/Log.php";
 if($_SESSION["rol"] == "administrador"){
     $creado = false;
     if(isset($_POST["crear"])){
-        $producto = new Producto($_POST["id"], $_POST["nombre"], $_POST["descripcion"],'',$_POST["cantidad_und"], $_POST["valor"]);
-        $producto -> crear();
+        $lista = new Lista_ingrediente($_POST["id"],"","", $_POST["nombre"], $_POST["descripcion"],'',$_POST["cantidad_und"], $_POST["valor"]);
+        //$producto = new Producto($_POST["id"], $_POST["nombre"], $_POST["descripcion"],'',$_POST["cantidad_und"], $_POST["valor"]);
+        //$producto -> crear();
+        $lista->agregar();
         $creado = true;      
-        date_default_timezone_set('America/Bogota');
-        $log = new Log($_SESSION["id"],"crear","crear producto: " . $_POST["nombre"] , date('Y-m-d'),date('H:i:s'),"administrador");
-        $log -> crear();
     }
     ?>
 	<div class="container">
@@ -22,7 +21,7 @@ if($_SESSION["rol"] == "administrador"){
     				</div>
     				<div class="card-body">
     					<?php if ($creado) { 					
-    						echo "<script>window.location = 'index.php?pid=".base64_encode("presentacion/ingrediente/buscarIngrediente.php")."&id_prod=".$_POST["id"]."';</script>";
+    					    echo "<script>window.location = 'index.php?pid=".base64_encode("presentacion/ingrediente/buscarIngrediente.php")."&id_prod=".$_POST["id"] ."';</script>";
     					} ?>
     					<form
     						action=<?php echo "index.php?pid=" . base64_encode("presentacion/producto/crearProducto.php") ?>

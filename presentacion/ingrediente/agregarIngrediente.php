@@ -5,18 +5,38 @@ $creado = false;
 $id_prod = $_GET["id_prod"];
 $cantidad_und = $_GET["cantidad_und"];
 $idIngrediente = $_GET["idIngrediente"];
-$pi = new Producto_ingrediente();
+$pi = new Lista_ingrediente();
+$pi ->consultar($_GET["id_prod"]);
+$consultar = $pi ->consultarTodos();
 $registro = $pi->consultarTotalRegistrosA($idIngrediente, $id_prod);
 if(isset($_POST["agregar"])){
     if ($registro==0){
-        if ($_POST["cantidad"] >= $cantidad_und){
-            $pi = new Producto_ingrediente($id_prod, $idIngrediente, $_POST["cantidad"]);
-            $pi -> agregar();                                   
-            $creado=true;
-        }else{
-            $creado = false;
-            echo "<script>alert('La cantidad de ingredientes es insuficiente');window.location = 'index.php?pid=".base64_encode("presentacion/ingrediente/agregarIngrediente.php") . "&id_prod=" . $id_prod. "&cantidad_und=" . $cantidad_und . "&idIngrediente=" . $idIngrediente . "';</script>";
-        }    
+        foreach ($consultar as $ct){
+            if ($ct->getCantidad()==0){
+                if ($_POST["cantidad"] >= $cantidad_und){
+                    if ($pi->getIdIngrediente()==0){
+                            $pi -> actualizar($idIngrediente,$id_prod, $_POST["cantidad"]);
+                    }
+                    else{
+                        $p = new Lista_ingrediente($pi->getIdProd(),$idIngrediente,$_POST["cantidad"],$pi->getNombre(),$pi->getDescripcion(),$pi->getImagen(),$pi->getCantidad_und(),$pi->getValor());
+                        $p -> agregar();
+                    }
+                    $creado=true;
+                }else{
+                    $creado = false;
+                    echo "<script>alert('La cantidad de ingredientes es insuficiente');window.location = 'index.php?pid=".base64_encode("presentacion/ingrediente/agregarIngrediente.php") . "&id_prod=" . $id_prod. "&cantidad_und=" . $cantidad_und . "&idIngrediente=" . $idIngrediente . "';</script>";
+                } 
+            }else{
+                if ($pi->getIdIngrediente()==0){
+                    $pi -> actualizar($idIngrediente,$id_prod, $_POST["cantidad"]);
+                }
+                else{
+                    $p = new Lista_ingrediente($pi->getIdProd(),$idIngrediente,$_POST["cantidad"],$pi->getNombre(),$pi->getDescripcion(),$pi->getImagen(),$pi->getCantidad_und(),$pi->getValor());
+                    $p -> agregar();
+                }
+                $creado=true;
+            }
+        }
     }else{
         $unidades = $pi->consultarID($idIngrediente, $id_prod);
         $suma = $unidades+$_POST["cantidad"];

@@ -20,6 +20,11 @@ class SolicitudIDAO{
         return "select nombre, cantidad
                 from SolicitudI where id_ingrediente = '" . $this -> id_ingrediente . "'";
     }
+    
+    function consultarI(){
+        return "select id_ingrediente, nombre, cantidad
+                from SolicitudI where id_ingrediente = '" . $this -> id_ingrediente . "'";
+    }
 
     function consultarTodos () {
         return "select id_ingrediente, nombre, cantidad
@@ -43,9 +48,17 @@ class SolicitudIDAO{
         return "select count(id_ingrediente)
                 from SolicitudI";
     }
+    
+    function consultarTotalRegistrosE($idP){
+        return "select count(s.id_ingrediente) FROM ingrediente i, solicitudi s WHERE s.id_ingrediente = i.id_ingrediente and i.idProveedor = '".$idP."'";
+    }
 
     function eliminar($id){
         return "delete from solicitudI where id_ingrediente = '".$id."'";
     }
+    
+    function actualizar($id, $sum){
+        return "update solicitudI set cantidad = '".$sum."' where id_ingrediente = '".$id."'";
+    }    
 }
 ?>

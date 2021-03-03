@@ -211,5 +211,16 @@ class Pedido{
         $this -> conexion -> ejecutar($this -> pedidoDAO -> actualizarEstado($idP, $estado));
         $this -> conexion -> cerrar();
     }
+    
+    function productoVendido(){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pedidoDAO -> productoVendido());
+        $this -> conexion -> cerrar();
+        $resultados = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($resultados, array($resultado[0], $resultado[1]));
+        }
+        return $resultados;
+    }
 }
 ?>

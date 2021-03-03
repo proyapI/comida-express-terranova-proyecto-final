@@ -149,5 +149,16 @@ class Producto{
         $this -> cantidad_und = $resultado[4];
         $this -> valor = $resultado[5];
     }
+    
+    function productoPrecio(){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> productoDAO -> productoPrecio());
+        $this -> conexion -> cerrar();
+        $resultados = array();
+        while(($resultado = $this -> conexion -> extraer()) != null){
+            array_push($resultados, array($resultado[0], $resultado[1]));
+        }
+        return $resultados;
+    }
 }
 ?>

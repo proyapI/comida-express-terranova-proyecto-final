@@ -1,13 +1,13 @@
 <?php
-require "persistencia/IngredienteDAO.php";
+require "persistencia/InventarioDAO.php";
 
-class Ingrediente{
+class Inventario{
     private $id_ingrediente;
     private $nombre;
     private $cantidad_und;
     private $idProveedor;
     private $conexion;
-    private $ingredienteDAO;        
+    private $inventarioDAO;        
 
     public function getIdIngrediente()
     {
@@ -29,56 +29,55 @@ class Ingrediente{
         return $this->idProveedor;
     }
 
-    function Ingrediente ($pid_ingrediente = "", $pnombre = "", $pcantidad_und = "",$pIdProveedor=""){
+    function Inventario($pid_ingrediente = "", $pnombre = "", $pcantidad_und = "",$pIdProveedor=""){
         $this -> id_ingrediente = $pid_ingrediente;
         $this -> nombre = $pnombre;
         $this -> cantidad_und = $pcantidad_und;
         $this->idProveedor = $pIdProveedor;
         $this -> conexion = new Conexion();
-        $this -> ingredienteDAO = new IngredienteDAO($pid_ingrediente, $pnombre, $pcantidad_und,$pIdProveedor);
+        $this -> inventarioDAO = new InventarioDAO($pid_ingrediente, $pnombre, $pcantidad_und,$pIdProveedor);
     }
 
     function agregar(){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> agregar());
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> agregar());
         $this -> conexion -> cerrar();
     }
 
     function consultarTodos(){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> consultarTodos());
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> consultarTodos());
         $this -> conexion -> cerrar();
-        $ingredientes = array();
+        $inventarios = array();
         while(($resultado = $this -> conexion -> extraer()) != null){
-            array_push($ingredientes, new Ingrediente($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
+            array_push($inventarios, new Inventario($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
         }
-        return $ingredientes;
+        return $inventarios;
     }
 
     function consultar(){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> consultar());
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> consultar());
         $this -> conexion -> cerrar();
         $resultado = $this -> conexion -> extraer();
         $this -> nombre = $resultado[0];
         $this -> cantidad_und = $resultado[1];
-        $this -> idProveedor = $resultado[2];
     }
 
     function consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id));
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> consultarPorPagina($cantidad, $pagina, $orden, $dir,$rol,$id));
         $this -> conexion -> cerrar();
-        $ingredientes = array();
+        $inventarios = array();
         while(($resultado = $this -> conexion -> extraer()) != null){
-            array_push($ingredientes, new Ingrediente($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
+            array_push($inventarios, new Inventario($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
         }
-        return $ingredientes;
+        return $inventarios;
     }
 
     function consultarTotalRegistros($rol,$id){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> consultarTotalRegistros($rol,$id));
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> consultarTotalRegistros($rol,$id));
         $this -> conexion -> cerrar();
         $resultado = $this -> conexion -> extraer();
         return $resultado[0];
@@ -86,36 +85,30 @@ class Ingrediente{
 
     function buscar($filtro){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> buscar($filtro));
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> buscar($filtro));
         $this -> conexion -> cerrar();
-        $ingredientes = array();
+        $inventarios = array();
         while(($resultado = $this -> conexion -> extraer()) != null){
-            array_push($ingredientes, new Ingrediente($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
+            array_push($inventarios, new Inventario($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
         }
-        return $ingredientes;
-    }
-
-    function eliminar(){
-        $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> eliminar());
-        $this -> conexion -> cerrar();
+        return $inventarios;
     }
 
     function editarUnidades($idI, $cant){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> editarUnidades($idI, $cant));
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> editarUnidades($idI, $cant));
         $this -> conexion -> cerrar();
     }
 
     function consultarE($idProd){
         $this -> conexion -> abrir();
-        $this -> conexion -> ejecutar($this -> ingredienteDAO -> consultarE($idProd));
+        $this -> conexion -> ejecutar($this -> inventarioDAO -> consultarE($idProd));
         $this -> conexion -> cerrar();
-        $ingredientes = array();
+        $inventarios = array();
         while(($resultado = $this -> conexion -> extraer()) != null){
-            array_push($ingredientes, new Ingrediente($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
+            array_push($inventarios, new Inventario($resultado[0], $resultado[1], $resultado[2],$resultado[3]));
         }
-        return $ingredientes;
+        return $inventarios;
     }
 }
 ?>

@@ -13,7 +13,9 @@ require "logica/Proceso.php";
 require "logica/SolicitudP.php";
 require "logica/SolicitudI.php";
 require "logica/Ingrediente.php";
+require "logica/Inventario.php";
 require "logica/Producto_ingrediente.php";
+require "logica/Lista_ingrediente.php";
 require "persistencia/Conexion.php";
 
 
@@ -53,6 +55,8 @@ if (isset($_GET["pid"])) {
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <title>Comida express Terranova</title>
 <link rel="icon" type="image/jpg" href="img/logo.jpg">
 <script type="text/javascript">

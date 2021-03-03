@@ -29,7 +29,16 @@ if($_GET["rol"] == "administrador" || $_GET["rol"] == "cliente"){
     			    echo "<tr>";
     			    echo "<td>" . $productoActual -> getId_prod() . "</td><td>". str_replace($filtro, "<FONT color='#FF0000'>$filtro</FONT>", $productoActual -> getNombre()) ."</td>";
     			    echo "<td>" . $productoActual -> getDescripcion() . "</td><td>" . $productoActual -> getImagen() . "</td><td>" . $productoActual -> getCantidad_und() . "</td><td>". $productoActual -> getValor() . "</td>";
-    			    echo "<td><a href='index.php?pid= " . base64_encode("presentacion/producto/editarProducto.php") . "&idProducto=" . $productoActual -> getId_prod() . "'><i class='fas fa-edit'></i></a></td>";
+    			    echo "<td>";
+    			    if($_GET["rol"] == "administrador"){
+    			        echo "<a href='index.php?pid= " . base64_encode("presentacion/producto/editarProducto.php") . "&id_prod=" . $productoActual -> getId_prod() . "'><i class='fas fa-edit'></i></a>&nbsp";
+    			        echo "<a href='index.php?pid=" . base64_encode("presentacion/producto/editarFotoProducto.php") . "&id_prod=" . $productoActual -> getId_prod() ."'><i class='fas fa-camera' data-toggle='tooltip' data-placement='bottom' title='Cambiar Foto'></i></a>&nbsp";
+    			        echo "<a href='index.php?pid=" . base64_encode("presentacion/producto/eliminarProducto.php") . "&id_prod=" . $productoActual -> getId_prod() ."'><i class='fas fa-trash' data-toggle='tooltip' data-placement='bottom' title='Eliminar Producto' onclick='return ConfirmDelete()'></i></a></td>";
+    			    }
+    			    if($_GET["rol"] == "cliente"){
+    			        echo "<a href='index.php?pid= " . base64_encode("presentacion/producto/comprarProducto.php" ) .
+    			        "&id_prod=" . $productoActual -> getId_prod() . "'><i class='fas fa-shopping-bag' ></i></a></td>";?>
+                     <?php }  
     			    echo "</tr>";			    
     			}			
     			?>			

@@ -2,6 +2,6 @@
 <?php
 session_start();
 if($_SESSION["rol"] == "administrador") {
-    $pi = new Producto_ingrediente();
+    $pi = new Lista_ingrediente();
     $pi->eliminarPI($_GET["id_prod"], $_GET["id_ingrediente"]);
 }

@@ -83,5 +83,9 @@ class ProductoDAO {
         return "select id_prod, nombre, descripcion, imagen, cantidad_und, valor
                 from Producto where id_prod = '" . $this-> id_prod . "'";
     }
+    
+    function productoPrecio(){
+        return "SELECT nombre, valor from producto order by valor DESC";
+    }
 }
 ?>
